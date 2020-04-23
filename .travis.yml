@@ -10,3 +10,16 @@ before_install:
 script:
   - docker run -e CI=true highvelcty/docker-react npm run test -- --coverage
 
+deploy:
+  # travis CI comes preconfigured to understand what elasticbeanstalk is
+  provider: elasticbeanstalk
+  region: "us-east-2"
+  app: "docker-react"
+  env: "DockerReact-env"
+  bucker_name: "elasticbeanstalk-us-east-2-270512128243"
+  bucket_path: "docker-react"
+  on:
+    branch: master
+  access_key_id: $AWS_ACCESS_KEY
+  secret_access_key: $AWS_SECRET_KEY
+
