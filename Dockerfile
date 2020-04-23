@@ -1,8 +1,8 @@
 # --- build phase ---
 # refer to node:alpine as builder
-FROM node:alpine as builder
+FROM node:alpine
 WORKDIR '/app'
-COPY package.json .
+COPY package*.json ./
 RUN npm install
 
 # No need for the volume system because this is for production
@@ -20,7 +20,7 @@ EXPOSE 80
 
 # copy from the "builder phase". the /app/build was populated by the COPY cmd
 # in the build phase above.
-COPY --from=builder /app/build /usr/share/nginx/html
+COPY --from=0 /app/build /usr/share/nginx/html
 
 # The default command of the nginx image is to startup nginx.
 
